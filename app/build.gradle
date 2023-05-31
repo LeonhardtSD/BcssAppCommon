@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+
+android {
+
+//    namespace 'com.icbc.bcss.appcommon'
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.icbc.bcss.appcommon"
+        minSdkVersion 22
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/aidl']
+            resources.srcDirs = ['src/main/java', 'src/main/aidl']
+            aidl.srcDirs = ['src/main/aidl']
+            assets.srcDirs = ['src/main/assets']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+repositories {
+
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+//    代码开发和联调情况下使用
+    api project(path: ':commonlib')
+
+//    //直接读取打包好的aar包，进行功能验证
+//    api(name: 'commonlib-release', ext: 'aar')
+
+//    api(name: 'lib_bcss_member_sdk-release', ext: 'aar')
+//    api files('libs/BASEyeCoolFace-release-V1.0-2306-20230516-01.aar')
+}
